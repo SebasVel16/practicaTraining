@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Set;
 
 @Data
 public class CourseDTO implements Serializable {
@@ -18,9 +17,4 @@ public class CourseDTO implements Serializable {
     @JsonProperty("capacity")
     private int capacity;
 
-    @JsonProperty("students")
-    private Set<StudentDTO> students;
-
-    @JsonProperty("subjects")
-    private Set<SubjectDTO> subjects;
 }

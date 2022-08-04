@@ -33,6 +33,7 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
+			<version>1.5.2.final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>

@@ -27,7 +27,6 @@ public class CourseController {
 
     @GetMapping
     public List<CourseDTO> listAllCourses(){
-        System.out.println("Hola");
         return courseService.listCourses();
     }
 
