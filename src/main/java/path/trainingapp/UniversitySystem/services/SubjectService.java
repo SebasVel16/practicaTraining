@@ -7,10 +7,12 @@ import path.trainingapp.UniversitySystem.repositories.SubjectRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface SubjectService {
 
     List<SubjectDTO> listSubjects();
+    Optional<Subject> getSubject(Long id);
 
 }

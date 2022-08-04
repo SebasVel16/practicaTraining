@@ -7,8 +7,9 @@ import path.trainingapp.UniversitySystem.mapper.CourseMapper;
 import path.trainingapp.UniversitySystem.models.Course;
 import path.trainingapp.UniversitySystem.models.Student;
 import path.trainingapp.UniversitySystem.repositories.CourseRepository;
-import path.trainingapp.UniversitySystem.repositories.StudentRepository;
 import path.trainingapp.UniversitySystem.services.CourseService;
+import path.trainingapp.UniversitySystem.services.StudentService;
+import path.trainingapp.UniversitySystem.services.SubjectService;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,14 +20,16 @@ public class CourseServiceImpl  implements CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
+    private final SubjectService subjectService;
 
-    public CourseServiceImpl(CourseRepository courseRepository, CourseMapper courseMapper, StudentRepository studentRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, CourseMapper courseMapper,
+                             StudentService studentService, SubjectService subjectService) {
         this.courseRepository = courseRepository;
         this.courseMapper = courseMapper;
-        this.studentRepository = studentRepository;
+        this.studentService = studentService;
+        this.subjectService = subjectService;
     }
-
 
     @Override
     public List<CourseDTO> listCourses() {
@@ -37,21 +40,29 @@ public class CourseServiceImpl  implements CourseService {
     }
 
     @Override
-    public String registerCourse(CourseStudentDTO courseStudentDTO) {
-        Optional<Course> courseOp = courseRepository.findById(courseStudentDTO.getIdCourse());
-        Optional<Student> studentOp = studentRepository.findById(courseStudentDTO.getIdStudent());
-        if(!courseOp.isEmpty()){
-            Course course = (Course) courseOp.get();
-            if(!studentOp.isEmpty()){
-                Student student = (Student) studentOp.get();
-                course.getStudents().add(student);
+    public String registerStudent(CourseStudentDTO courseStudentDTO) {
+        Optional<Course> courseOpt = courseRepository.findById(courseStudentDTO.getIdCourse());
+        Optional<Student> studentOpt = studentService.getStudent(courseStudentDTO.getIdStudent());
+        if(courseOpt.isPresent()){
+            Course course = courseOpt.get();
+            if(studentOpt.isPresent() && course.getStudents().size() <= course.getCapacity()){
+                Student student = studentOpt.get();
+                course.addStudent(student);
                 courseRepository.save(course);
                 return "Course added Successfully";
             }
-            return "Student with this id does not exist";
+            if(course.getStudents().size() > course.getCapacity()){
+                return "Course full";
+            }else{
+                return "Student with this id does not exist";
+            }
         }
         return "Course with this id does not exit";
     }
 
+    @Override
+    public String registerSubject(CourseStudentDTO courseStudentDTO) {
+        return null;
+    }
 
 }

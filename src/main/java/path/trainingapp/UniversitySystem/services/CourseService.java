@@ -15,6 +15,8 @@ public interface CourseService {
 
     List<CourseDTO> listCourses();
 
-    String registerCourse(CourseStudentDTO courseStudentDTO);
+    String registerStudent(CourseStudentDTO courseStudentDTO);
+
+    String registerSubject(CourseStudentDTO courseStudentDTO);
 
 }

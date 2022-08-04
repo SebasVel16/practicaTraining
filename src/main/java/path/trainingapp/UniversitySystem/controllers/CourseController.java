@@ -30,9 +30,9 @@ public class CourseController {
         return courseService.listCourses();
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registerStudents")
     public String registerCourse(@RequestBody CourseStudentDTO courseStudentDTO){
-        return courseService.registerCourse(courseStudentDTO);
+        return courseService.registerStudent(courseStudentDTO);
     }
 
 }
