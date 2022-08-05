@@ -34,12 +34,12 @@ public class CourseController {
     }
 
     @PostMapping("/register-students")
-    public String registerCourse (@RequestBody CourseStudentDTO courseStudentDTO){
+    public String registerCourse (@Valid @RequestBody CourseStudentDTO courseStudentDTO){
         return courseService.registerStudent(courseStudentDTO);
     }
 
     @PostMapping("/register-subjects")
-    public String registerSubject(@RequestBody CourseSubjectDTO courseSubjectDTO){
+    public String registerSubject(@Valid @RequestBody CourseSubjectDTO courseSubjectDTO){
             return courseService.registerSubject(courseSubjectDTO);
     }
 
