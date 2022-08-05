@@ -73,10 +73,10 @@ public class CourseServiceImpl  implements CourseService {
                 courseRepository.save(course);
                 return "Subject added Successfully";
             }else{
-                return "Subject not found";
+                throw new ResourceNotFoundException("Subject not found");
             }
         }
-        return "Course not found";
+        throw new ResourceNotFoundException("Course not found");
     }
 
 }
