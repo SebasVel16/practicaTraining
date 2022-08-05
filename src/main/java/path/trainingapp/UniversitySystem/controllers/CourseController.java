@@ -3,6 +3,7 @@ package path.trainingapp.UniversitySystem.controllers;
 import org.springframework.web.bind.annotation.*;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
 import path.trainingapp.UniversitySystem.dto.CourseStudentDTO;
+import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
 import path.trainingapp.UniversitySystem.repositories.StudentRepository;
 import path.trainingapp.UniversitySystem.services.CourseService;
 
@@ -33,6 +34,11 @@ public class CourseController {
     @PostMapping("/registerStudents")
     public String registerCourse(@RequestBody CourseStudentDTO courseStudentDTO){
         return courseService.registerStudent(courseStudentDTO);
+    }
+
+    @PostMapping("/registerSubjects")
+    public String registerSubject(@RequestBody CourseSubjectDTO courseSubjectDTO){
+        return courseService.registerSubject(courseSubjectDTO);
     }
 
 }

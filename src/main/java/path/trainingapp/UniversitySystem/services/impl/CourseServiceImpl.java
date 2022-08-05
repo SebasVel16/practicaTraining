@@ -3,9 +3,12 @@ package path.trainingapp.UniversitySystem.services.impl;
 import org.springframework.stereotype.Service;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
 import path.trainingapp.UniversitySystem.dto.CourseStudentDTO;
+import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
+import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
 import path.trainingapp.UniversitySystem.mapper.CourseMapper;
 import path.trainingapp.UniversitySystem.models.Course;
 import path.trainingapp.UniversitySystem.models.Student;
+import path.trainingapp.UniversitySystem.models.Subject;
 import path.trainingapp.UniversitySystem.repositories.CourseRepository;
 import path.trainingapp.UniversitySystem.services.CourseService;
 import path.trainingapp.UniversitySystem.services.StudentService;
@@ -40,29 +43,40 @@ public class CourseServiceImpl  implements CourseService {
     }
 
     @Override
-    public String registerStudent(CourseStudentDTO courseStudentDTO) {
+    public String registerStudent(CourseStudentDTO courseStudentDTO) throws ResourceNotFoundException{
         Optional<Course> courseOpt = courseRepository.findById(courseStudentDTO.getIdCourse());
         Optional<Student> studentOpt = studentService.getStudent(courseStudentDTO.getIdStudent());
         if(courseOpt.isPresent()){
             Course course = courseOpt.get();
             if(studentOpt.isPresent() && course.getStudents().size() <= course.getCapacity()){
-                Student student = studentOpt.get();
-                course.addStudent(student);
+                course.addStudent(studentOpt.get());
                 courseRepository.save(course);
                 return "Course added Successfully";
             }
             if(course.getStudents().size() > course.getCapacity()){
                 return "Course full";
             }else{
-                return "Student with this id does not exist";
+                return "Subject not found";
             }
         }
-        return "Course with this id does not exit";
+        return "Course not found";
     }
 
     @Override
-    public String registerSubject(CourseStudentDTO courseStudentDTO) {
-        return null;
+    public String registerSubject(CourseSubjectDTO courseSubjectDTO) {
+        Optional<Course> courseOpt = courseRepository.findById(courseSubjectDTO.getIdCourse());
+        Optional<Subject> subjectOpt = subjectService.getSubject(courseSubjectDTO.getIdSubject());
+        if(courseOpt.isPresent()){
+            Course course = courseOpt.get();
+            if(subjectOpt.isPresent()){
+                course.addSubject(subjectOpt.get());
+                courseRepository.save(course);
+                return "Subject added Successfully";
+            }else{
+                return "Subject not found";
+            }
+        }
+        return "Course not found";
     }
 
 }
