@@ -43,7 +43,7 @@ public class CourseServiceImpl  implements CourseService {
     }
 
     @Override
-    public String registerStudent(CourseStudentDTO courseStudentDTO) throws ResourceNotFoundException{
+    public String registerStudent(CourseStudentDTO courseStudentDTO){
         Optional<Course> courseOpt = courseRepository.findById(courseStudentDTO.getIdCourse());
         Optional<Student> studentOpt = studentService.getStudent(courseStudentDTO.getIdStudent());
         if(courseOpt.isPresent()){
@@ -56,10 +56,10 @@ public class CourseServiceImpl  implements CourseService {
             if(course.getStudents().size() > course.getCapacity()){
                 return "Course full";
             }else{
-                return "Subject not found";
+                throw new ResourceNotFoundException("Student not found");
             }
         }
-        return "Course not found";
+        throw new ResourceNotFoundException("Course not found");
     }
 
     @Override

@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Data
 public class CourseDTO implements Serializable {
 
+
     @JsonProperty("id")
     private Long id;
 

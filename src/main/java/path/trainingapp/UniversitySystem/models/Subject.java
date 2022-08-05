@@ -9,7 +9,8 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Setter
+@Getter
 @Entity
 public class Subject {
 
@@ -25,4 +26,11 @@ public class Subject {
     private Set<Course> courses = new HashSet<>();
 
 
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + getCredits();
+        return result;
+    }
 }

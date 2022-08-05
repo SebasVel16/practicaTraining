@@ -4,9 +4,11 @@ import org.springframework.web.bind.annotation.*;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
 import path.trainingapp.UniversitySystem.dto.CourseStudentDTO;
 import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
+import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
 import path.trainingapp.UniversitySystem.repositories.StudentRepository;
 import path.trainingapp.UniversitySystem.services.CourseService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,14 +33,14 @@ public class CourseController {
         return courseService.listCourses();
     }
 
-    @PostMapping("/registerStudents")
-    public String registerCourse(@RequestBody CourseStudentDTO courseStudentDTO){
+    @PostMapping("/register-students")
+    public String registerCourse (@RequestBody CourseStudentDTO courseStudentDTO){
         return courseService.registerStudent(courseStudentDTO);
     }
 
-    @PostMapping("/registerSubjects")
+    @PostMapping("/register-subjects")
     public String registerSubject(@RequestBody CourseSubjectDTO courseSubjectDTO){
-        return courseService.registerSubject(courseSubjectDTO);
+            return courseService.registerSubject(courseSubjectDTO);
     }
 
 }
