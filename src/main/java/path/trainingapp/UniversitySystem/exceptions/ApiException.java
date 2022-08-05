@@ -4,11 +4,11 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 @Data
-public class ResourceException {
+public class ApiException {
     private final String msg;
     private final HttpStatus httpStatus;
 
-    public ResourceException(String msg, HttpStatus httpStatus) {
+    public ApiException(String msg, HttpStatus httpStatus) {
         this.msg = msg;
         this.httpStatus = httpStatus;
     }
