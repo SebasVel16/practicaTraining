@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.*;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
 import path.trainingapp.UniversitySystem.dto.CourseStudentDTO;
 import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
-import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
-import path.trainingapp.UniversitySystem.repositories.StudentRepository;
 import path.trainingapp.UniversitySystem.services.CourseService;
 
 import javax.validation.Valid;
@@ -34,12 +32,12 @@ public class CourseController {
     }
 
     @PostMapping("/register-students")
-    public String registerCourse (@Valid @RequestBody CourseStudentDTO courseStudentDTO){
+    public String registerCourse (@RequestBody CourseStudentDTO courseStudentDTO){
         return courseService.registerStudent(courseStudentDTO);
     }
 
     @PostMapping("/register-subjects")
-    public String registerSubject(@Valid @RequestBody CourseSubjectDTO courseSubjectDTO){
+    public String registerSubject(@RequestBody CourseSubjectDTO courseSubjectDTO){
             return courseService.registerSubject(courseSubjectDTO);
     }
 

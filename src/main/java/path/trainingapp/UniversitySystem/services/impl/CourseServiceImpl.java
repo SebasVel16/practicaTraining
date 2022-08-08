@@ -48,12 +48,12 @@ public class CourseServiceImpl  implements CourseService {
         Optional<Student> studentOpt = studentService.getStudent(courseStudentDTO.getIdStudent());
         if(courseOpt.isPresent()){
             Course course = courseOpt.get();
-            if(studentOpt.isPresent() && course.getStudents().size() <= course.getCapacity()){
+            if(studentOpt.isPresent() && course.getStudents().size() < course.getCapacity()){
                 course.addStudent(studentOpt.get());
                 courseRepository.save(course);
                 return "Course added Successfully";
             }
-            if(course.getStudents().size() > course.getCapacity()){
+            if(course.getStudents().size() >= course.getCapacity()){
                 return "Course full";
             }else{
                 throw new ResourceNotFoundException("Student not found");

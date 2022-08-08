@@ -25,6 +25,11 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects")
     private Set<Course> courses = new HashSet<>();
 
+    public Subject(Long id, String name, int credits) {
+        this.id = id;
+        this.name = name;
+        this.credits = credits;
+    }
 
     @Override
     public int hashCode() {
