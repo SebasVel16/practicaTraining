@@ -22,4 +22,9 @@ public class SubjectController {
         return subjectService.listSubjects();
     }
 
+    @PostMapping("/save")
+    public SubjectDTO saveSubject(SubjectDTO subjectDTO){
+        return subjectService.saveSubject(subjectDTO);
+    }
+
 }

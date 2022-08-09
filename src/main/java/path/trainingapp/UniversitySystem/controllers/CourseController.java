@@ -19,25 +19,24 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-//    @GetMapping
-//    public ResponseEntity<CourseListDTO> getAllCourses(){
-//        return new ResponseEntity<CourseListDTO>(
-//                new CourseListDTO(courseService.listCourses()), HttpStatus.OK
-//                );
-//    }
 
     @GetMapping
     public List<CourseDTO> listAllCourses(){
         return courseService.listCourses();
     }
 
+    @PostMapping("/save")
+    public CourseDTO saveCourse(@Valid @RequestBody CourseDTO courseDTO){
+        return courseService.saveCourse(courseDTO);
+    }
+
     @PostMapping("/register-students")
-    public String registerCourse (@RequestBody CourseStudentDTO courseStudentDTO){
+    public String registerCourse (@Valid @RequestBody CourseStudentDTO courseStudentDTO){
         return courseService.registerStudent(courseStudentDTO);
     }
 
     @PostMapping("/register-subjects")
-    public String registerSubject(@RequestBody CourseSubjectDTO courseSubjectDTO){
+    public String registerSubject(@Valid @RequestBody CourseSubjectDTO courseSubjectDTO){
             return courseService.registerSubject(courseSubjectDTO);
     }
 

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import path.trainingapp.UniversitySystem.dto.StudentDTO;
 import path.trainingapp.UniversitySystem.services.StudentService;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class StudentController {
     @GetMapping
     public List<StudentDTO> listStudents(){
         return studentService.listStudents();
+    }
+
+    @PostMapping("/save")
+    public StudentDTO saveStudent(@Valid @RequestBody StudentDTO studentDTO){
+        return studentService.saveStudent(studentDTO);
     }
 
 }

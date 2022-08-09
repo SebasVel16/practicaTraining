@@ -34,4 +34,10 @@ public class SubjectServiceImpl implements SubjectService {
     public Optional<Subject> getSubject(Long id) {
         return subjectRepository.findById(id);
     }
+
+    @Override
+    public SubjectDTO saveSubject(SubjectDTO subjectDTO) {
+        Subject subject = subjectMapper.subjectDTOToSubject(subjectDTO);
+        return subjectMapper.subjectToSubjectDTO(subjectRepository.save(subject));
+    }
 }

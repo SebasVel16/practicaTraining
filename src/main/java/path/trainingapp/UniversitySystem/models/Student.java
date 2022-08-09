@@ -13,8 +13,11 @@ import java.util.Set;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
+    private String email;
 
     private String name;
     private int age;
@@ -22,10 +25,11 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private Set<Course> courses = new HashSet<>();
 
-    public Student(Long id, String name, int age) {
+    public Student(Long id, String name, int age, String email) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.email = email;
     }
 
     public Long getId() {
@@ -52,6 +56,14 @@ public class Student {
         this.age = age;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Set<Course> getCourses() {
         return courses;
     }
@@ -59,6 +71,7 @@ public class Student {
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
+
 
     @Override
     public int hashCode() {

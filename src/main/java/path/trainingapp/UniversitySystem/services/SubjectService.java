@@ -14,5 +14,6 @@ public interface SubjectService {
 
     List<SubjectDTO> listSubjects();
     Optional<Subject> getSubject(Long id);
+    SubjectDTO saveSubject(SubjectDTO subjectDTO);
 
 }

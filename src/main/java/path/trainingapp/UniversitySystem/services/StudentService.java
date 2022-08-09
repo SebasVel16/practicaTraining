@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface StudentService {
     List<StudentDTO> listStudents();
     Optional<Student> getStudent(Long id);
+    StudentDTO saveStudent(StudentDTO studentDTO);
 }

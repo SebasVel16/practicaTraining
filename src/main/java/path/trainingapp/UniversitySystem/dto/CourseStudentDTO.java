@@ -12,11 +12,12 @@ import java.io.Serializable;
 @Data
 public class CourseStudentDTO implements Serializable {
 
-
+    @NotNull
     @JsonProperty("idCourse")
     private Long idCourse;
 
 
+    @NotNull
     @JsonProperty("idStudent")
     private Long idStudent;
 }

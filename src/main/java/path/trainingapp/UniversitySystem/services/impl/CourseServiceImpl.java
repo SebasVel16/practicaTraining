@@ -43,6 +43,12 @@ public class CourseServiceImpl  implements CourseService {
     }
 
     @Override
+    public CourseDTO saveCourse(CourseDTO courseDTO) {
+        Course course = courseMapper.courseDTOToCourse(courseDTO);
+        return courseMapper.courseToCourseDTO(courseRepository.save(course));
+    }
+
+    @Override
     public String registerStudent(CourseStudentDTO courseStudentDTO){
         Optional<Course> courseOpt = courseRepository.findById(courseStudentDTO.getIdCourse());
         Optional<Student> studentOpt = studentService.getStudent(courseStudentDTO.getIdStudent());
@@ -78,5 +84,6 @@ public class CourseServiceImpl  implements CourseService {
         }
         throw new ResourceNotFoundException("Course not found");
     }
+
 
 }
