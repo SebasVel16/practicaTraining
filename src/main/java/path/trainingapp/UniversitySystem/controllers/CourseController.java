@@ -2,7 +2,6 @@ package path.trainingapp.UniversitySystem.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
-import path.trainingapp.UniversitySystem.dto.CourseStudentDTO;
 import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
 import path.trainingapp.UniversitySystem.services.CourseService;
 
@@ -30,10 +29,6 @@ public class CourseController {
         return courseService.saveCourse(courseDTO);
     }
 
-    @PostMapping("/register-students")
-    public String registerCourse (@Valid @RequestBody CourseStudentDTO courseStudentDTO){
-        return courseService.registerStudent(courseStudentDTO);
-    }
 
     @PostMapping("/register-subjects")
     public String registerSubject(@Valid @RequestBody CourseSubjectDTO courseSubjectDTO){

@@ -21,11 +21,8 @@ public class Course {
     private String name;
     private int capacity;
 
-    @ManyToMany
-    @JoinTable(name = "course_student",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private Set<Student> students = new HashSet<>();
+    @OneToMany(mappedBy = "course")
+    Set<CourseRegistration> registrations = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "course_subject",
@@ -39,9 +36,9 @@ public class Course {
         this.capacity = capacity;
     }
 
-    public void addStudent(Student student){
-        students.add(student);
-        student.getCourses().add(this);
+    public void addCourseRegistration(CourseRegistration registration){
+        registrations.add(registration);
+        registration.setCourse(this);
     }
     public void addSubject(Subject subject){
         subjects.add(subject);

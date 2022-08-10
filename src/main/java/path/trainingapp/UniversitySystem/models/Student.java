@@ -22,8 +22,8 @@ public class Student {
     private String name;
     private int age;
 
-    @ManyToMany(mappedBy = "students")
-    private Set<Course> courses = new HashSet<>();
+    @OneToMany(mappedBy = "student")
+    private Set<CourseRegistration> registrations = new HashSet<>();
 
     public Student(Long id, String name, int age, String email) {
         this.id = id;
@@ -64,14 +64,13 @@ public class Student {
         this.email = email;
     }
 
-    public Set<Course> getCourses() {
-        return courses;
+    public Set<CourseRegistration> getRegistrations() {
+        return registrations;
     }
 
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+    public void setRegistrations(Set<CourseRegistration> registrations) {
+        this.registrations = registrations;
     }
-
 
     @Override
     public int hashCode() {

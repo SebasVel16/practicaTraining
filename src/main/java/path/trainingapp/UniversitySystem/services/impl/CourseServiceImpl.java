@@ -2,7 +2,7 @@ package path.trainingapp.UniversitySystem.services.impl;
 
 import org.springframework.stereotype.Service;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
-import path.trainingapp.UniversitySystem.dto.CourseStudentDTO;
+import path.trainingapp.UniversitySystem.dto.CourseRegistrationDTO;
 import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
 import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
 import path.trainingapp.UniversitySystem.mapper.CourseMapper;
@@ -23,14 +23,12 @@ public class CourseServiceImpl  implements CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
-    private final StudentService studentService;
     private final SubjectService subjectService;
 
     public CourseServiceImpl(CourseRepository courseRepository, CourseMapper courseMapper,
                              StudentService studentService, SubjectService subjectService) {
         this.courseRepository = courseRepository;
         this.courseMapper = courseMapper;
-        this.studentService = studentService;
         this.subjectService = subjectService;
     }
 
@@ -49,23 +47,8 @@ public class CourseServiceImpl  implements CourseService {
     }
 
     @Override
-    public String registerStudent(CourseStudentDTO courseStudentDTO){
-        Optional<Course> courseOpt = courseRepository.findById(courseStudentDTO.getIdCourse());
-        Optional<Student> studentOpt = studentService.getStudent(courseStudentDTO.getIdStudent());
-        if(courseOpt.isPresent()){
-            Course course = courseOpt.get();
-            if(studentOpt.isPresent() && course.getStudents().size() < course.getCapacity()){
-                course.addStudent(studentOpt.get());
-                courseRepository.save(course);
-                return "Course added Successfully";
-            }
-            if(course.getStudents().size() >= course.getCapacity()){
-                return "Course full";
-            }else{
-                throw new ResourceNotFoundException("Student not found");
-            }
-        }
-        throw new ResourceNotFoundException("Course not found");
+    public Optional<Course> getCourse(Long id) {
+        return courseRepository.findById(id);
     }
 
     @Override
