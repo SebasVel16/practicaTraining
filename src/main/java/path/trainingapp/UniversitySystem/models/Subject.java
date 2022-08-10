@@ -9,12 +9,13 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Setter
+@Getter
 @Entity
 public class Subject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -24,5 +25,17 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects")
     private Set<Course> courses = new HashSet<>();
 
+    public Subject(Long id, String name, int credits) {
+        this.id = id;
+        this.name = name;
+        this.credits = credits;
+    }
 
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + getCredits();
+        return result;
+    }
 }

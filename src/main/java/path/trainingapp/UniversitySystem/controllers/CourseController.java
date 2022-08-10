@@ -3,9 +3,10 @@ package path.trainingapp.UniversitySystem.controllers;
 import org.springframework.web.bind.annotation.*;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
 import path.trainingapp.UniversitySystem.dto.CourseStudentDTO;
-import path.trainingapp.UniversitySystem.repositories.StudentRepository;
+import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
 import path.trainingapp.UniversitySystem.services.CourseService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,21 +19,25 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-//    @GetMapping
-//    public ResponseEntity<CourseListDTO> getAllCourses(){
-//        return new ResponseEntity<CourseListDTO>(
-//                new CourseListDTO(courseService.listCourses()), HttpStatus.OK
-//                );
-//    }
 
     @GetMapping
     public List<CourseDTO> listAllCourses(){
         return courseService.listCourses();
     }
 
-    @PostMapping("/register")
-    public String registerCourse(@RequestBody CourseStudentDTO courseStudentDTO){
-        return courseService.registerCourse(courseStudentDTO);
+    @PostMapping("/save")
+    public CourseDTO saveCourse(@Valid @RequestBody CourseDTO courseDTO){
+        return courseService.saveCourse(courseDTO);
+    }
+
+    @PostMapping("/register-students")
+    public String registerCourse (@Valid @RequestBody CourseStudentDTO courseStudentDTO){
+        return courseService.registerStudent(courseStudentDTO);
+    }
+
+    @PostMapping("/register-subjects")
+    public String registerSubject(@Valid @RequestBody CourseSubjectDTO courseSubjectDTO){
+            return courseService.registerSubject(courseSubjectDTO);
     }
 
 }

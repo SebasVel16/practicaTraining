@@ -14,8 +14,9 @@ import java.util.Set;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
 
     private String name;
     private int capacity;
@@ -32,5 +33,18 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private Set<Subject> subjects = new HashSet<>();
 
+    public Course(Long id, String name, int capacity) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+    }
 
+    public void addStudent(Student student){
+        students.add(student);
+        student.getCourses().add(this);
+    }
+    public void addSubject(Subject subject){
+        subjects.add(subject);
+        subject.getCourses().add(this);
+    }
 }
