@@ -1,6 +1,7 @@
 package path.trainingapp.UniversitySystem.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Student {
     private String name;
     private int age;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "student")
     private Set<CourseRegistration> registrations = new HashSet<>();
 

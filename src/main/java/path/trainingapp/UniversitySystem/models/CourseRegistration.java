@@ -1,6 +1,7 @@
 package path.trainingapp.UniversitySystem.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,13 @@ public class CourseRegistration {
     @EmbeddedId
     CourseRegistrationKey id;
 
+    @JsonBackReference
     @ManyToOne
     @MapsId("studentId")
     @JoinColumn(name = "student_id")
     Student student;
 
+    @JsonBackReference
     @ManyToOne
     @MapsId("courseId")
     @JoinColumn(name = "course_id")
@@ -35,4 +38,5 @@ public class CourseRegistration {
         this.id = id;
         this.grade = grade;
     }
+
 }

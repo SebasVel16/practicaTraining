@@ -33,7 +33,7 @@ public class CourseRegistrationMapperImpl implements CourseRegistrationMapper {
         CourseRegistrationKey courseRegistrationKey = new CourseRegistrationKey(courseRegistrationDTO.getCourseId(),courseRegistrationDTO.getStudentId());
 
         Optional<Course> course = courseService.getCourse(courseRegistrationDTO.getCourseId());
-        Optional<Student> student = studentService.getStudent(courseRegistrationDTO.getCourseId());
+        Optional<Student> student = studentService.getStudent(courseRegistrationDTO.getStudentId());
         courseRegistration.setId(courseRegistrationKey);
         if(course.isPresent()){
             courseRegistration.setCourse(course.get());
