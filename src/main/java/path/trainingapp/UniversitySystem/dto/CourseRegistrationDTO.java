@@ -28,7 +28,7 @@ public class CourseRegistrationDTO implements Serializable {
     @Max(value = 5, message = "Value must be less than or equals to 5")
     @Min(value = 0, message = "value must be greater or equal to 0")
     @JsonProperty("grade")
-    private int grade;
+    private double grade;
 
     @NotNull
     @JsonProperty("semester")

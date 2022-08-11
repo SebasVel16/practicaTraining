@@ -30,7 +30,7 @@ public class CourseRegistration {
     @JoinColumn(name = "course_id")
     Course course;
 
-    private int grade;
+    private double grade;
 
     private int semester;
 
