@@ -10,5 +10,5 @@ import java.util.List;
 public interface CourseRegistrationService {
     CourseRegistrationDTO registerStudents(CourseRegistrationDTO courseRegistrationDTO);
 
-    List<CourseRegistration> getCourseBestGrades(int semester);
+    List<CourseRegistrationDTO> getCourseBestGrades(int semester);
 }

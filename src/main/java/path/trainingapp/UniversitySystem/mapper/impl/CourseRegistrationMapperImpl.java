@@ -4,16 +4,12 @@ package path.trainingapp.UniversitySystem.mapper.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import path.trainingapp.UniversitySystem.dto.CourseRegistrationDTO;
-import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
 import path.trainingapp.UniversitySystem.mapper.CourseRegistrationMapper;
-import path.trainingapp.UniversitySystem.models.Course;
 import path.trainingapp.UniversitySystem.models.CourseRegistration;
-import path.trainingapp.UniversitySystem.models.Student;
 import path.trainingapp.UniversitySystem.models.compositeKey.CourseRegistrationKey;
 import path.trainingapp.UniversitySystem.services.CourseService;
 import path.trainingapp.UniversitySystem.services.StudentService;
 
-import java.util.Optional;
 
 @Component
 public class CourseRegistrationMapperImpl implements CourseRegistrationMapper {
@@ -30,25 +26,16 @@ public class CourseRegistrationMapperImpl implements CourseRegistrationMapper {
             return null;
         }
         CourseRegistration courseRegistration = new CourseRegistration();
-        CourseRegistrationKey courseRegistrationKey = new CourseRegistrationKey(courseRegistrationDTO.getCourseId(),courseRegistrationDTO.getStudentId());
-
-        Optional<Course> course = courseService.getCourse(courseRegistrationDTO.getCourseId());
-        Optional<Student> student = studentService.getStudent(courseRegistrationDTO.getStudentId());
+        CourseRegistrationKey courseRegistrationKey = new CourseRegistrationKey(
+                courseRegistrationDTO.getCourseId(),
+                courseRegistrationDTO.getStudentId()
+        );
         courseRegistration.setId(courseRegistrationKey);
-        if(course.isPresent()){
-            courseRegistration.setCourse(course.get());
-        }else {
-            throw new ResourceNotFoundException("Course not found");
-        }
-        if(student.isPresent()){
-            courseRegistration.setStudent(student.get());
-        }else {
-            throw new ResourceNotFoundException("Student not found");
-        }
         courseRegistration.setGrade(courseRegistrationDTO.getGrade());
         courseRegistration.setSemester(courseRegistrationDTO.getSemester());
 
         return courseRegistration;
+
     }
 
     @Override

@@ -7,7 +7,6 @@ import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
 import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
 import path.trainingapp.UniversitySystem.mapper.CourseMapper;
 import path.trainingapp.UniversitySystem.models.Course;
-import path.trainingapp.UniversitySystem.models.Student;
 import path.trainingapp.UniversitySystem.models.Subject;
 import path.trainingapp.UniversitySystem.repositories.CourseRepository;
 import path.trainingapp.UniversitySystem.services.CourseService;

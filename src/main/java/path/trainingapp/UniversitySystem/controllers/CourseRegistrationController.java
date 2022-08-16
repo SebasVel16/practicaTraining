@@ -22,7 +22,7 @@ public class CourseRegistrationController {
         return courseRegistrationService.registerStudents(courseRegistrationDTO);
     }
     @GetMapping("/best/{semester}")
-    public List<CourseRegistration> getBestGrades(@PathVariable int semester){
+    public List<CourseRegistrationDTO> getBestGrades(@PathVariable int semester){
         return courseRegistrationService.getCourseBestGrades(semester);
     }
 }
