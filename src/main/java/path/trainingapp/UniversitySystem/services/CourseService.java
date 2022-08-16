@@ -21,4 +21,6 @@ public interface CourseService {
 
     Optional<Course> getCourse(Long id);
 
+    CourseDTO getCourseDTO(Long id);
+
 }

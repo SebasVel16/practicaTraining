@@ -17,6 +17,7 @@ public class CourseRegistrationController {
     public CourseRegistrationController(CourseRegistrationService courseRegistrationService) {
         this.courseRegistrationService = courseRegistrationService;
     }
+
     @PostMapping("/save")
     public CourseRegistrationDTO registerStudents(@Valid @RequestBody CourseRegistrationDTO courseRegistrationDTO){
         return courseRegistrationService.registerStudents(courseRegistrationDTO);

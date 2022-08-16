@@ -51,6 +51,16 @@ public class CourseServiceImpl  implements CourseService {
     }
 
     @Override
+    public CourseDTO getCourseDTO(Long id) {
+        Optional<Course> course = courseRepository.findById(id);
+        if(course.isPresent()){
+            return courseMapper.courseToCourseDTO(course.get());
+        }else {
+            throw new ResourceNotFoundException("Course not found");
+        }
+    }
+
+    @Override
     public String registerSubject(CourseSubjectDTO courseSubjectDTO) {
         Optional<Course> courseOpt = courseRepository.findById(courseSubjectDTO.getIdCourse());
         Optional<Subject> subjectOpt = subjectService.getSubject(courseSubjectDTO.getIdSubject());
