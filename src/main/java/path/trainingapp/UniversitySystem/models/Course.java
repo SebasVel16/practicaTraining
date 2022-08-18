@@ -46,4 +46,5 @@ public class Course {
         subjects.add(subject);
         subject.getCourses().add(this);
     }
+
 }

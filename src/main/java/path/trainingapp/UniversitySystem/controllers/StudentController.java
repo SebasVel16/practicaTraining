@@ -23,7 +23,7 @@ public class StudentController {
         return studentService.listStudents();
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public StudentDTO saveStudent(@Valid @RequestBody StudentDTO studentDTO){
         return studentService.saveStudent(studentDTO);
     }

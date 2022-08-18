@@ -25,13 +25,13 @@ public class CourseController {
         return courseService.listCourses();
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public CourseDTO saveCourse(@Valid @RequestBody CourseDTO courseDTO){
         return courseService.saveCourse(courseDTO);
     }
 
 
-    @PostMapping("/register-subjects")
+    @PostMapping("/subjects")
     public String registerSubject(@Valid @RequestBody CourseSubjectDTO courseSubjectDTO){
             return courseService.registerSubject(courseSubjectDTO);
     }

@@ -39,4 +39,28 @@ public class CourseRegistration {
         this.grade = grade;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CourseRegistration that = (CourseRegistration) o;
+
+        if (Double.compare(that.getGrade(), getGrade()) != 0) return false;
+        if (getSemester() != that.getSemester()) return false;
+        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
+        if (getStudent() != null ? !getStudent().equals(that.getStudent()) : that.getStudent() != null) return false;
+        return getCourse() != null ? getCourse().equals(that.getCourse()) : that.getCourse() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = getId() != null ? getId().hashCode() : 0;
+        temp = Double.doubleToLongBits(getGrade());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + getSemester();
+        return result;
+    }
 }

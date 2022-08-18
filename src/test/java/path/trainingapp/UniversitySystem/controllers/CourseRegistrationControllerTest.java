@@ -2,6 +2,7 @@ package path.trainingapp.UniversitySystem.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import path.trainingapp.UniversitySystem.dto.CourseRegistrationDTO;
+import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
 import path.trainingapp.UniversitySystem.services.CourseRegistrationService;
 
 import java.util.ArrayList;
@@ -56,14 +58,37 @@ class CourseRegistrationControllerTest {
     }
 
     @Test
-    void registerStudents() throws Exception {
+    void registerStudentsSuccess() throws Exception {
         Mockito.when(courseRegistrationService.registerStudents(courseRegistrationDTO))
                 .thenReturn(courseRegistrationDTO);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/registration/save")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/course-registrations")
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(courseRegistrationDTO)))
                 .andExpect(jsonPath("$",notNullValue()))
                 .andExpect(jsonPath("$.grade",is(3.0)));
+
+    }
+    @Test
+    void registerStudentsStudentNotFound() throws Exception {
+        Mockito.when(courseRegistrationService.registerStudents(courseRegistrationDTO))
+                        .thenThrow(new ResourceNotFoundException("Student not found"));
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/course-registrations")
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                        .content(this.mapper.writeValueAsString(courseRegistrationDTO)))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
+                .andExpect(result -> Assertions.assertEquals("Student not found", result.getResolvedException().getMessage()));
+
+    }
+
+    @Test
+    void registerStudentsCourseNotFound() throws Exception {
+        Mockito.when(courseRegistrationService.registerStudents(courseRegistrationDTO))
+                .thenThrow(new ResourceNotFoundException("Course not found"));
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/course-registrations")
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                        .content(this.mapper.writeValueAsString(courseRegistrationDTO)))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
+                .andExpect(result -> Assertions.assertEquals("Course not found", result.getResolvedException().getMessage()));
 
     }
 
@@ -71,7 +96,7 @@ class CourseRegistrationControllerTest {
     void getBestGrades() throws Exception {
         Mockito.when(courseRegistrationService.getCourseBestGrades(semester))
                 .thenReturn(courseRegistrationDTOList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/courses/registration/best/202202")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/course-registrations/best/202202")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$",notNullValue()))
                 .andExpect(jsonPath("$[0].grade",is(5.0)));

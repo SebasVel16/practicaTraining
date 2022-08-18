@@ -2,6 +2,7 @@ package path.trainingapp.UniversitySystem.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
 import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
+import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
 import path.trainingapp.UniversitySystem.models.Course;
 import path.trainingapp.UniversitySystem.services.CourseService;
 
@@ -59,12 +61,20 @@ public class CourseControllerTest {
                 .andExpect(jsonPath("$[0].id", is(1)));
     }
     @Test
-    void getCourseById() throws Exception {
+    void getCourseByIdSuccess() throws Exception {
         Mockito.when(courseService.getCourseDTO(1L)).thenReturn(courseDTO);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/courses/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$",notNullValue()))
                 .andExpect(jsonPath("$.name", is("test1")));
+    }
+    @Test
+    void getCourseByIdFailure() throws Exception {
+        Mockito.when(courseService.getCourseDTO(2L)).thenThrow(new ResourceNotFoundException("Course not found"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/courses/2")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
+                .andExpect(result -> Assertions.assertEquals("Course not found", result.getResolvedException().getMessage()));
     }
     @Test
     void saveCourse() throws Exception {
@@ -77,12 +87,30 @@ public class CourseControllerTest {
                 .andExpect(jsonPath("$.name",is("test1")));
     }
     @Test
-    void registerSubject() throws Exception{
+    void registerSubjectSuccess() throws Exception{
         Mockito.when(courseService.registerSubject(courseSubjectDTO)).thenReturn("Subject added Successfully");
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/register-subjects")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/subjects")
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(courseSubjectDTO)))
                 .andExpect(jsonPath("$",notNullValue()))
                 .andExpect(jsonPath("$",is("Subject added Successfully")));
+    }
+    @Test
+    void registerSubjectSubjectNotFound() throws Exception{
+        Mockito.when(courseService.registerSubject(courseSubjectDTO)).thenThrow(new ResourceNotFoundException("Subject not found"));
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/subjects")
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                        .content(this.mapper.writeValueAsString(courseSubjectDTO)))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
+                .andExpect(result -> Assertions.assertEquals("Subject not found", result.getResolvedException().getMessage()));
+    }
+    @Test
+    void registerSubjectCourseNotFound() throws Exception{
+        Mockito.when(courseService.registerSubject(courseSubjectDTO)).thenThrow(new ResourceNotFoundException("Course not found"));
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/subjects")
+                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                        .content(this.mapper.writeValueAsString(courseSubjectDTO)))
+                .andExpect(result -> Assertions.assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
+                .andExpect(result -> Assertions.assertEquals("Course not found", result.getResolvedException().getMessage()));
     }
 }

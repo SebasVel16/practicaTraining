@@ -5,7 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import path.trainingapp.UniversitySystem.dto.CourseRegistrationDTO;
 import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
 import path.trainingapp.UniversitySystem.mapper.CourseRegistrationMapper;
@@ -20,6 +22,7 @@ import path.trainingapp.UniversitySystem.services.StudentService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class CourseRegistrationServiceImpl implements CourseRegistrationService {
@@ -45,8 +48,13 @@ public class CourseRegistrationServiceImpl implements CourseRegistrationService 
 
         Optional<Course> course = courseService.getCourse(courseRegistrationDTO.getCourseId());
         Optional<Student> student = studentService.getStudent(courseRegistrationDTO.getStudentId());
+        System.out.println(course.get().getRegistrations().size());
         if(course.isPresent()){
-            courseRegistration.setCourse(course.get());
+            if(course.get().getCapacity() >= course.get().getRegistrations().size()) {
+                courseRegistration.setCourse(course.get());
+            }else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Course is full");
+            }
         }
         else {
             throw new ResourceNotFoundException("Course not found");

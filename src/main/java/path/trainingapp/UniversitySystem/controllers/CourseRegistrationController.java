@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/courses/registration")
+@RequestMapping("/api/course-registrations")
 public class CourseRegistrationController {
     CourseRegistrationService courseRegistrationService;
 
@@ -18,7 +18,7 @@ public class CourseRegistrationController {
         this.courseRegistrationService = courseRegistrationService;
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public CourseRegistrationDTO registerStudents(@Valid @RequestBody CourseRegistrationDTO courseRegistrationDTO){
         return courseRegistrationService.registerStudents(courseRegistrationDTO);
     }
