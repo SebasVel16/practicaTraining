@@ -79,7 +79,7 @@ public class CourseControllerTest {
     @Test
     void saveCourse() throws Exception {
         Mockito.when(courseService.saveCourse(saveCourseDto)).thenReturn(courseDTO);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/courses/save")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/courses")
                 .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(
                         this.mapper.writeValueAsString(saveCourseDto)
                         ))

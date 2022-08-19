@@ -2,6 +2,7 @@ package path.trainingapp.UniversitySystem.services.impl;
 
 import org.springframework.stereotype.Service;
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
+import path.trainingapp.UniversitySystem.dto.CoursePatchDTO;
 import path.trainingapp.UniversitySystem.dto.CourseRegistrationDTO;
 import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
 import path.trainingapp.UniversitySystem.exceptions.ResourceNotFoundException;
@@ -61,6 +62,23 @@ public class CourseServiceImpl  implements CourseService {
     }
 
     @Override
+    public CourseDTO updateCourse(CoursePatchDTO coursePatchDTO) {
+        Optional<Course> course = courseRepository.findById(coursePatchDTO.getId());
+        if(course.isPresent()){
+            if(coursePatchDTO.getName() != null){
+                course.get().setName(coursePatchDTO.getName());
+            }
+            if (course.get().getCapacity() != 0 && coursePatchDTO.getCapacity() != 0){
+                course.get().setCapacity(coursePatchDTO.getCapacity());
+            }
+            courseRepository.save(course.get());
+            return courseMapper.courseToCourseDTO(course.get());
+        }else{
+            throw new ResourceNotFoundException("Course not found");
+        }
+    }
+
+    @Override
     public String registerSubject(CourseSubjectDTO courseSubjectDTO) {
         Optional<Course> courseOpt = courseRepository.findById(courseSubjectDTO.getIdCourse());
         Optional<Subject> subjectOpt = subjectService.getSubject(courseSubjectDTO.getIdSubject());
@@ -76,6 +94,5 @@ public class CourseServiceImpl  implements CourseService {
         }
         throw new ResourceNotFoundException("Course not found");
     }
-
 
 }

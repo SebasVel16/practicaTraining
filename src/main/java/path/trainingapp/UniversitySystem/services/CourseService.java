@@ -2,6 +2,7 @@ package path.trainingapp.UniversitySystem.services;
 
 
 import path.trainingapp.UniversitySystem.dto.CourseDTO;
+import path.trainingapp.UniversitySystem.dto.CoursePatchDTO;
 import path.trainingapp.UniversitySystem.dto.CourseRegistrationDTO;
 import path.trainingapp.UniversitySystem.dto.CourseSubjectDTO;
 import path.trainingapp.UniversitySystem.models.Course;
@@ -22,5 +23,7 @@ public interface CourseService {
     Optional<Course> getCourse(Long id);
 
     CourseDTO getCourseDTO(Long id);
+
+    CourseDTO updateCourse(CoursePatchDTO coursePatchDTO);
 
 }

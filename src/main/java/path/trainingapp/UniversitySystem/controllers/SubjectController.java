@@ -23,7 +23,7 @@ public class SubjectController {
     }
 
     @PostMapping
-    public SubjectDTO saveSubject(SubjectDTO subjectDTO){
+    public SubjectDTO saveSubject(@RequestBody SubjectDTO subjectDTO){
         return subjectService.saveSubject(subjectDTO);
     }
 
