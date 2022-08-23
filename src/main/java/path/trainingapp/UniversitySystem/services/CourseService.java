@@ -26,4 +26,6 @@ public interface CourseService {
 
     CourseDTO updateCourse(CoursePatchDTO coursePatchDTO);
 
+    String deleteCourse(Long id);
+
 }

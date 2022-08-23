@@ -23,7 +23,7 @@ public class Course {
     private int capacity;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
     Set<CourseRegistration> registrations = new HashSet<>();
 
     @ManyToMany

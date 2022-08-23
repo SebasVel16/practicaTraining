@@ -24,7 +24,7 @@ public class Student {
     private int age;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
     private Set<CourseRegistration> registrations = new HashSet<>();
 
     public Student(Long id, String name, int age, String email) {

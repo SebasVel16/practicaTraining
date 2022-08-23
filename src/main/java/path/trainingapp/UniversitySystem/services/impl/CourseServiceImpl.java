@@ -79,6 +79,17 @@ public class CourseServiceImpl  implements CourseService {
     }
 
     @Override
+    public String deleteCourse(Long id) {
+        if(courseRepository.existsById(id)){
+            courseRepository.deleteById(id);
+            return "Course deleted successfully";
+        }
+        else {
+            throw new ResourceNotFoundException("Course not found");
+        }
+    }
+
+    @Override
     public String registerSubject(CourseSubjectDTO courseSubjectDTO) {
         Optional<Course> courseOpt = courseRepository.findById(courseSubjectDTO.getIdCourse());
         Optional<Subject> subjectOpt = subjectService.getSubject(courseSubjectDTO.getIdSubject());

@@ -47,4 +47,9 @@ public class CourseController {
        return courseService.getCourseDTO(id);
     }
 
+    @DeleteMapping("{id}")
+    public String deleteCourse(@PathVariable Long id){
+        return courseService.deleteCourse(id);
+    }
+
 }

@@ -22,7 +22,7 @@ public class Subject {
     private int credits;
 
 
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany(mappedBy = "subjects", cascade = CascadeType.REMOVE)
     private Set<Course> courses = new HashSet<>();
 
     public Subject(Long id, String name, int credits) {

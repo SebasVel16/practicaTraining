@@ -6,23 +6,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDTO implements Serializable {
+public class StudentPatchDTO implements Serializable {
 
-    @Null
+    @NotNull
     @JsonProperty("id")
     private Long id;
 
-    @NotNull(message = "Name is mandatory")
+    @JsonProperty("age")
+    private int age;
+
     @JsonProperty("name")
     private String name;
 
-    @NotNull(message = "Credits are mandatory")
-    @JsonProperty("credits")
-    private int credits;
+    @JsonProperty("email")
+    private  String email;
 }

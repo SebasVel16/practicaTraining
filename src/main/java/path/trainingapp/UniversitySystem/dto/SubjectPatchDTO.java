@@ -12,17 +12,15 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDTO implements Serializable {
+public class SubjectPatchDTO implements Serializable {
 
-    @Null
+    @NotNull
     @JsonProperty("id")
     private Long id;
 
-    @NotNull(message = "Name is mandatory")
     @JsonProperty("name")
     private String name;
 
-    @NotNull(message = "Credits are mandatory")
     @JsonProperty("credits")
     private int credits;
 }

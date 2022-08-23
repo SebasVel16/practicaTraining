@@ -2,6 +2,7 @@ package path.trainingapp.UniversitySystem.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import path.trainingapp.UniversitySystem.dto.StudentDTO;
+import path.trainingapp.UniversitySystem.dto.StudentPatchDTO;
 import path.trainingapp.UniversitySystem.services.StudentService;
 
 import javax.validation.Valid;
@@ -26,6 +27,16 @@ public class StudentController {
     @PostMapping
     public StudentDTO saveStudent(@Valid @RequestBody StudentDTO studentDTO){
         return studentService.saveStudent(studentDTO);
+    }
+
+    @PatchMapping
+    public StudentDTO updateStudent(@Valid @RequestBody StudentPatchDTO studentPatchDTO){
+        return studentService.updateStudent(studentPatchDTO);
+    }
+
+    @DeleteMapping("{id}")
+    public String deleteStudent(@PathVariable Long id){
+        return studentService.deleteStudent(id);
     }
 
 }
