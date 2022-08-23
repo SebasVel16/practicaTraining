@@ -6,7 +6,6 @@ import path.trainingapp.UniversitySystem.models.Course;
 
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
-
     CourseDTO courseToCourseDTO(Course course);
     Course courseDTOToCourse(CourseDTO courseDTO);
 }
